@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manananggal Survival Game - Enhanced with Asset Integration</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Audio preloads -->
+    <audio id="macheteHit" preload="auto">
+        <source src="assets/audio/effects/machete-hit.mp3" type="audio/mpeg">
+        <source src="assets/audio/effects/machete-hit.wav" type="audio/wav">
+    </audio>
+    <audio id="monsterDeath" preload="auto">
+        <source src="assets/audio/effects/monster-death.mp3" type="audio/mpeg">
+        <source src="assets/audio/effects/monster-death.ogg" type="audio/ogg">
+    </audio>
+    <audio id="powerupCollect" preload="auto">
+        <source src="assets/audio/effects/powerup.mp3" type="audio/mpeg">
+        <source src="assets/audio/effects/powerup.ogg" type="audio/ogg">
+    </audio>
+    <audio id="backgroundMusic" loop preload="auto">
+        <source src="assets/audio/music/ambient-horror.mp3" type="audio/mpeg">
+        <source src="assets/audio/music/ambient-horror.wav" type="audio/wav">
+    </audio>
+
+    <div class="loading-indicator" id="loadingIndicator">Loading Assets...</div>
+    
+    <div class="title">Manananggal Survival</div>
+    
+    <div class="game-area" id="gameArea">
+        <div class="hud">
+            <div>Machetes: <span id="macheteCount">1</span></div>
+            <div>Durability: <span id="durability">100</span></div>
+            <div>Score: <span id="score">0</span></div>
+            <div>Killed: <span id="kills">0</span></div>
+        </div>
+        
+        <div class="character" id="character">
+            <div class="character-body">
+                <div class="head">
+                    <div class="eyes">
+                        <div class="eye left"></div>
+                        <div class="eye right"></div>
+                    </div>
+                </div>
+                <div class="arm left"></div>
+                <div class="arm right"></div>
+                <div class="torso"></div>
+                <div class="shorts"></div>
+                <div class="leg left"></div>
+                <div class="leg right"></div>
+            </div>
+        </div>
+
+        <div class="game-over" id="gameOver">
+            <div>GAME OVER!</div>
+            <div style="font-size: 18px; margin-top: 15px; font-family: 'Press Start 2P', monospace;">
+                Final Score: <span id="finalScore">0</span><br>
+                Killed: <span id="finalKills">0</span>
+            </div>
+            <button class="restart-btn" onclick="restartGame()">Restart Game</button>
+        </div>
+    </div>
+
+    <div class="controls">
+        <h3>Controls</h3>
+        <p>Arrow Keys or WASD to move | Hold Shift to run</p>
+        <p>🟡 Power Buffs increase machete power | 🟢 Machete Buffs add extra machetes</p>
+        <p>Survive the Manananggal attack!</p>
+    </div>
+
+    <div class="debug-info" id="debugInfo">
+        <h4>Asset Status:</h4>
+        <div id="assetStatus">Checking...</div>
+    </div>
+<script src="script.js"></script>
+</body>
+</html>
