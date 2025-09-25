@@ -1,3 +1,53 @@
+// Google Sheets integration system
+const scoreManager = {
+    scriptUrl: 'https://script.google.com/macros/s/AKfycbwdcgNR7cBl1EaMUqIT_Ke8nOVu4-OYGJTo_nxrTnlaV4IcuQu5DM-21CxmRSrCb7fX/exec',
+    
+    async submitScore(scoreData) {
+        try {
+            const response = await fetch(this.scriptUrl, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(scoreData)
+            });
+            
+            console.log('Score submitted successfully!');
+            return true;
+        } catch (error) {
+            console.error('Failed to submit score:', error);
+            return false;
+        }
+    },
+
+    async getLeaderboard(limit = 10) {
+        try {
+            const response = await fetch(`${this.scriptUrl}?action=leaderboard&limit=${limit}`);
+            const data = await response.json();
+            
+            if (data.success) {
+                return data.leaderboard;
+            } else {
+                console.error('Failed to fetch leaderboard:', data.error);
+                return [];
+            }
+        } catch (error) {
+            console.error('Failed to fetch leaderboard:', error);
+            return [];
+        }
+    },
+
+    formatSurvivalTime(startTime) {
+        if (!startTime) return '0:00';
+        
+        const elapsed = Date.now() - startTime;
+        const minutes = Math.floor(elapsed / 60000);
+        const seconds = Math.floor((elapsed % 60000) / 1000);
+        return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    }
+};
+
 // Audio management system
 const audioManager = {
     sounds: {},
@@ -211,7 +261,9 @@ let gameState = {
     isMoving: false,
     isRunning: false,
     spawnIntervals: [],
-    characterState: 'idle'
+    characterState: 'idle',
+    gameStartTime: null,
+    playerName: ''
 };
 
 const character = document.getElementById('character');
@@ -656,7 +708,7 @@ function updateHUD() {
     document.getElementById('kills').textContent = gameState.kills;
 }
 
-function gameOver() {
+async function gameOver() {
     gameState.gameRunning = false;
     
     // Stop background music
@@ -666,11 +718,91 @@ function gameOver() {
     gameState.spawnIntervals.forEach(interval => clearInterval(interval));
     gameState.spawnIntervals = [];
     
+    // Calculate survival time
+    const survivalTime = scoreManager.formatSurvivalTime(gameState.gameStartTime);
+    
+    // Update final stats display
     document.getElementById('finalScore').textContent = Math.floor(gameState.score);
     document.getElementById('finalKills').textContent = gameState.kills;
+    document.getElementById('finalMachetes').textContent = gameState.macheteCount;
+    document.getElementById('finalSurvivalTime').textContent = survivalTime;
+    
+    // Show game over screen with name input
     document.getElementById('gameOver').style.display = 'block';
     
-    console.log(`Game Over! Final Score: ${Math.floor(gameState.score)}, Kills: ${gameState.kills}`);
+    console.log(`Game Over! Final Score: ${Math.floor(gameState.score)}, Kills: ${gameState.kills}, Machetes: ${gameState.macheteCount}`);
+}
+
+async function submitScoreToSheet() {
+    const playerNameInput = document.getElementById('playerNameInput');
+    const playerName = playerNameInput.value.trim() || 'Anonymous';
+    
+    // Disable submit button to prevent double submission
+    const submitButton = document.getElementById('submitScoreBtn');
+    submitButton.disabled = true;
+    submitButton.textContent = 'Submitting...';
+    
+    try {
+        const scoreData = {
+            playerName: playerName,
+            score: Math.floor(gameState.score),
+            kills: gameState.kills,
+            macheteCount: gameState.macheteCount,
+            survivalTime: scoreManager.formatSurvivalTime(gameState.gameStartTime)
+        };
+        
+        const success = await scoreManager.submitScore(scoreData);
+        
+        if (success) {
+            // Show success message and load leaderboard
+            showLeaderboard();
+            document.getElementById('scoreSubmissionForm').style.display = 'none';
+            document.getElementById('leaderboardSection').style.display = 'block';
+        } else {
+            alert('Failed to submit score. Please try again.');
+            submitButton.disabled = false;
+            submitButton.textContent = 'Submit Score';
+        }
+    } catch (error) {
+        console.error('Error submitting score:', error);
+        alert('Failed to submit score. Please try again.');
+        submitButton.disabled = false;
+        submitButton.textContent = 'Submit Score';
+    }
+}
+
+async function showLeaderboard() {
+    const leaderboardContainer = document.getElementById('leaderboardList');
+    leaderboardContainer.innerHTML = '<div class="loading">Loading leaderboard...</div>';
+    
+    try {
+        const leaderboard = await scoreManager.getLeaderboard(10);
+        
+        if (leaderboard.length === 0) {
+            leaderboardContainer.innerHTML = '<div class="no-scores">No scores available yet.</div>';
+            return;
+        }
+        
+        let leaderboardHTML = '';
+        leaderboard.forEach(entry => {
+            const medal = entry.rank === 1 ? '🥇' : entry.rank === 2 ? '🥈' : entry.rank === 3 ? '🥉' : `#${entry.rank}`;
+            leaderboardHTML += `
+                <div class="leaderboard-entry rank-${entry.rank}">
+                    <span class="rank">${medal}</span>
+                    <span class="player-name">${entry.playerName}</span>
+                    <span class="score">${entry.score}</span>
+                    <span class="kills">${entry.kills} kills</span>
+                    <span class="machetes">${entry.macheteCount} 🔪</span>
+                    <span class="time">${entry.survivalTime}</span>
+                </div>
+            `;
+        });
+        
+        leaderboardContainer.innerHTML = leaderboardHTML;
+    } catch (error) {
+        console.error('Error loading leaderboard:', error);
+        leaderboardContainer.innerHTML = '<div class="error">Failed to load leaderboard.</div>';
+    }
 }
 
 function restartGame() {
@@ -700,7 +832,9 @@ function restartGame() {
         isMoving: false,
         isRunning: false,
         spawnIntervals: [],
-        characterState: 'idle'
+        characterState: 'idle',
+        gameStartTime: Date.now(),
+        playerName: ''
     };
 
     // Reset character position and sprite
@@ -711,8 +845,21 @@ function restartGame() {
     characterAnimator.resetAnimation();
     characterAnimator.updateAnimation(character, 'idle');
 
-    // Hide game over screen
+    // Hide game over screen and reset forms
     document.getElementById('gameOver').style.display = 'none';
+    document.getElementById('scoreSubmissionForm').style.display = 'block';
+    document.getElementById('leaderboardSection').style.display = 'none';
+    
+    // Reset form elements
+    const submitButton = document.getElementById('submitScoreBtn');
+    if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Submit Score';
+    }
+    const playerNameInput = document.getElementById('playerNameInput');
+    if (playerNameInput) {
+        playerNameInput.value = '';
+    }
 
     // Resume background music if user has interacted
     if (userInteracted) {
@@ -775,6 +922,9 @@ async function initializeGame() {
     // Check and load assets first
     await assetChecker.checkAssets();
     
+    // Set game start time
+    gameState.gameStartTime = Date.now();
+    
     // Initialize game objects
     createInitialMachetes();
     startSpawning();
@@ -783,6 +933,14 @@ async function initializeGame() {
     setInterval(gameLoop, 16); // 60fps
     
     console.log('Game initialized successfully!');
+    console.log('GOOGLE SHEETS INTEGRATION:');
+    console.log('========================');
+    console.log('1. Create a Google Apps Script project');
+    console.log('2. Copy the provided Google Apps Script code');
+    console.log('3. Deploy as web app with permissions set to "Anyone"');
+    console.log('4. Replace YOUR_SCRIPT_ID in the scoreManager.scriptUrl');
+    console.log('5. Scores will be automatically saved to Google Sheets!');
+    console.log('========================');
     console.log('ASSET INTEGRATION GUIDE:');
     console.log('========================');
     console.log('Place your assets in:');
@@ -807,5 +965,7 @@ async function initializeGame() {
 // Start the game when page loads
 window.addEventListener('load', initializeGame);
 
-// Expose restart function globally
+// Expose functions globally
 window.restartGame = restartGame;
+window.submitScoreToSheet = submitScoreToSheet;
+window.showLeaderboard = showLeaderboard;
