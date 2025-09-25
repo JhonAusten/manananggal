@@ -55,12 +55,31 @@
         </div>
 
         <div class="game-over" id="gameOver">
-            <div>GAME OVER!</div>
-            <div style="font-size: 18px; margin-top: 15px; font-family: 'Press Start 2P', monospace;">
-                Final Score: <span id="finalScore">0</span><br>
-                Killed: <span id="finalKills">0</span>
+            <div class="game-over-title">GAME OVER!</div>
+            
+            <div class="final-stats">
+                <div class="stat-row">Final Score: <span id="finalScore">0</span></div>
+                <div class="stat-row">Monsters Killed: <span id="finalKills">0</span></div>
+                <div class="stat-row">Machetes Obtained: <span id="finalMachetes">1</span></div>
+                <div class="stat-row">Survival Time: <span id="finalSurvivalTime">0:00</span></div>
             </div>
-            <button class="restart-btn" onclick="restartGame()">Restart Game</button>
+
+            <!-- Score submission form -->
+            <div id="scoreSubmissionForm" class="score-form">
+                <input type="text" id="playerNameInput" placeholder="Enter your name (optional)" maxlength="20" class="name-input">
+                <button id="submitScoreBtn" onclick="submitScoreToSheet()" class="submit-btn">Submit Score</button>
+                <button onclick="showLeaderboard()" class="view-leaderboard-btn">View Leaderboard</button>
+            </div>
+
+            <!-- Leaderboard section -->
+            <div id="leaderboardSection" class="leaderboard-section" style="display: none;">
+                <h3 class="leaderboard-title">🏆 TOP SURVIVORS 🏆</h3>
+                <div id="leaderboardList" class="leaderboard-list">
+                    <!-- Leaderboard entries will be populated here -->
+                </div>
+            </div>
+
+            <button class="restart-btn" onclick="restartGame()">Play Again</button>
         </div>
     </div>
 
