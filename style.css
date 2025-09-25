@@ -1,578 +1,738 @@
 * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        body {
-            background: linear-gradient(135deg, #0a0a0a, #1a1a2e, #16213e);
-            font-family: Arial, sans-serif;
-            overflow: hidden;
-            color: white;
-            height: 100vh;
-            width: 100vw;
-        }
+body {
+    background: linear-gradient(135deg, #0a0a0a, #1a1a2e, #16213e);
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+    color: white;
+    height: 100vh;
+    width: 100vw;
+}
 
-        .game-area {
-            width: 100vw;
-            height: 100vh;
-            position: relative;
-            /* Fallback gradient background */
-            background: linear-gradient(to bottom, #0a0a2e 0%, #16213e 30%, #0f3460 70%, #1a1a1a 100%);
-            /* Background image (if available) */
-            background-image: url('assets/images/backgrounds/night-sky.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            overflow: hidden;
-        }
+.game-area {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    /* Fallback gradient background */
+    background: linear-gradient(to bottom, #0a0a2e 0%, #16213e 30%, #0f3460 70%, #1a1a1a 100%);
+    /* Background image (if available) */
+    background-image: url('assets/images/backgrounds/night-sky.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
 
-        /* CHARACTER WITH SPRITE INTEGRATION */
-        .character {
-            position: absolute;
-            width: 62px;
-            height: 130px;
-            z-index: 10;
-            /* Use sprite if available, fallback to CSS */
-            background-image: url('assets/images/characters/character-idle.png');
-            background-repeat: no-repeat;
-            image-rendering: pixelated;
-        }
+/* CHARACTER WITH SPRITE INTEGRATION */
+.character {
+    position: absolute;
+    width: 62px;
+    height: 130px;
+    z-index: 10;
+    /* Use sprite if available, fallback to CSS */
+    background-image: url('assets/images/characters/character-idle.png');
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+}
 
-        /* Fallback CSS character (if sprite doesn't load) */
-        .character-body {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
+/* Fallback CSS character (if sprite doesn't load) */
+.character-body {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
 
-        /* Hide CSS version when sprite loads successfully */
-        .character.sprite-loaded .character-body {
-            display: none;
-        }
+/* Hide CSS version when sprite loads successfully */
+.character.sprite-loaded .character-body {
+    display: none;
+}
 
-        /* Original CSS character parts (fallback) */
-        .head {
-            width: 20px;
-            height: 20px;
-            background-color: #C4915F;
-            border-radius: 50%;
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            border: 2px solid #A0793D;
-        }
+/* Original CSS character parts (fallback) */
+.head {
+    width: 20px;
+    height: 20px;
+    background-color: #C4915F;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 2px solid #A0793D;
+}
 
-        .eyes {
-            position: absolute;
-            top: 6px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 12px;
-            height: 4px;
-        }
+.eyes {
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 4px;
+}
 
-        .eye {
-            width: 3px;
-            height: 3px;
-            background-color: #000;
-            border-radius: 50%;
-            position: absolute;
-            top: 0;
-        }
+.eye {
+    width: 3px;
+    height: 3px;
+    background-color: #000;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+}
 
-        .eye.left { left: 2px; }
-        .eye.right { right: 2px; }
+.eye.left { left: 2px; }
+.eye.right { right: 2px; }
 
-        .torso {
-            width: 24px;
-            height: 20px;
-            background-color: #FFFFFF;
-            position: absolute;
-            top: 18px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 4px;
-            border: 1px solid #E0E0E0;
-        }
+.torso {
+    width: 24px;
+    height: 20px;
+    background-color: #FFFFFF;
+    position: absolute;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 4px;
+    border: 1px solid #E0E0E0;
+}
 
-        .arm {
-            width: 6px;
-            height: 18px;
-            background-color: #C4915F;
-            position: absolute;
-            top: 20px;
-            border-radius: 3px;
-        }
+.arm {
+    width: 6px;
+    height: 18px;
+    background-color: #C4915F;
+    position: absolute;
+    top: 20px;
+    border-radius: 3px;
+}
 
-        .arm.left { left: 6px; }
-        .arm.right { right: 6px; }
+.arm.left { left: 6px; }
+.arm.right { right: 6px; }
 
-        .shorts {
-            width: 20px;
-            height: 12px;
-            background-color: #000000;
-            position: absolute;
-            top: 38px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 2px;
-        }
+.shorts {
+    width: 20px;
+    height: 12px;
+    background-color: #000000;
+    position: absolute;
+    top: 38px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
 
-        .leg {
-            width: 6px;
-            height: 16px;
-            background-color: #C4915F;
-            position: absolute;
-            top: 44px;
-            border-radius: 3px;
-        }
+.leg {
+    width: 6px;
+    height: 16px;
+    background-color: #C4915F;
+    position: absolute;
+    top: 44px;
+    border-radius: 3px;
+}
 
-        .leg.left { left: 12px; }
-        .leg.right { right: 12px; }
+.leg.left { left: 12px; }
+.leg.right { right: 12px; }
 
-        /* MACHETE WITH SPRITE INTEGRATION */
-        .machete {
-            position: absolute;
-            width: 45px;
-            height: 6px;
-            background-image: url('assets/images/weapons/machete.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            /* Fallback gradient */
-            background: linear-gradient(90deg, #654321, #C0C0C0, #E5E5E5);
-            border-radius: 3px;
-            transform-origin: center;
-            z-index: 5;
-            box-shadow: 0 0 8px rgba(192, 192, 192, 0.6);
-            border: 1px solid #888;
-        }
+/* MACHETE WITH SPRITE INTEGRATION */
+.machete {
+    position: absolute;
+    width: 45px;
+    height: 6px;
+    background-image: url('assets/images/weapons/machete.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* Fallback gradient */
+    background: linear-gradient(90deg, #654321, #C0C0C0, #E5E5E5);
+    border-radius: 3px;
+    transform-origin: center;
+    z-index: 5;
+    box-shadow: 0 0 8px rgba(192, 192, 192, 0.6);
+    border: 1px solid #888;
+}
 
-        /* Hide CSS machete details if sprite loads */
-        .machete.sprite-loaded::before,
-        .machete.sprite-loaded::after {
-            display: none;
-        }
+/* Hide CSS machete details if sprite loads */
+.machete.sprite-loaded::before,
+.machete.sprite-loaded::after {
+    display: none;
+}
 
-        .machete::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: -1px;
-            width: 12px;
-            height: 8px;
-            background: linear-gradient(90deg, #654321, #8B4513);
-            border-radius: 2px;
-            border: 1px solid #444;
-        }
+.machete::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -1px;
+    width: 12px;
+    height: 8px;
+    background: linear-gradient(90deg, #654321, #8B4513);
+    border-radius: 2px;
+    border: 1px solid #444;
+}
 
-        .machete::after {
-            content: '';
-            position: absolute;
-            right: -2px;
-            top: 1px;
-            width: 8px;
-            height: 4px;
-            background: #E5E5E5;
-            clip-path: polygon(0 0, 100% 50%, 0 100%);
-        }
+.machete::after {
+    content: '';
+    position: absolute;
+    right: -2px;
+    top: 1px;
+    width: 8px;
+    height: 4px;
+    background: #E5E5E5;
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
 
-        /* MANANANGGAL WITH SPRITE INTEGRATION */
-        .manananggal {
-            position: absolute;
-            width: 78px;
-            height: 106px;
-            z-index: 8;
-            background-image: url('assets/images/monsters/manananggal.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            image-rendering: pixelated;
-            image-rendering: -moz-crisp-edges;
-            image-rendering: crisp-edges;
-        }
+/* MANANANGGAL WITH SPRITE INTEGRATION */
+.manananggal {
+    position: absolute;
+    width: 78px;
+    height: 106px;
+    z-index: 8;
+    background-image: url('assets/images/monsters/manananggal.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
 
-        /* Hide CSS version if sprite loads */
-        .manananggal.sprite-loaded .manananggal-head,
-        .manananggal.sprite-loaded .manananggal-torso,
-        .manananggal.sprite-loaded .manananggal-wing,
-        .manananggal.sprite-loaded .manananggal-intestines {
-            display: none;
-        }
+/* Hide CSS version if sprite loads */
+.manananggal.sprite-loaded .manananggal-head,
+.manananggal.sprite-loaded .manananggal-torso,
+.manananggal.sprite-loaded .manananggal-wing,
+.manananggal.sprite-loaded .manananggal-intestines {
+    display: none;
+}
 
-        /* Original CSS Manananggal (fallback) */
-        .manananggal-head {
-            width: 32px;
-            height: 24px;
-            background: #4a1c1c;
-            position: absolute;
-            top: 0;
-            left: 14px;
-            border: 2px solid #2a0f0f;
-        }
+/* Original CSS Manananggal (fallback) */
+.manananggal-head {
+    width: 32px;
+    height: 24px;
+    background: #4a1c1c;
+    position: absolute;
+    top: 0;
+    left: 14px;
+    border: 2px solid #2a0f0f;
+}
 
-        .manananggal-eyes {
-            position: absolute;
-            top: 6px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 20px;
-            height: 6px;
-        }
+.manananggal-eyes {
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 6px;
+}
 
-        .manananggal-eye {
-            width: 6px;
-            height: 6px;
-            background-color: #ff3333;
-            position: absolute;
-            top: 0;
-            box-shadow: 0 0 4px #ff3333, inset -2px -2px 0 #cc0000;
-        }
+.manananggal-eye {
+    width: 6px;
+    height: 6px;
+    background-color: #ff3333;
+    position: absolute;
+    top: 0;
+    box-shadow: 0 0 4px #ff3333, inset -2px -2px 0 #cc0000;
+}
 
-        .manananggal-eye.left { left: 2px; }
-        .manananggal-eye.right { right: 2px; }
+.manananggal-eye.left { left: 2px; }
+.manananggal-eye.right { right: 2px; }
 
-        .manananggal-mouth {
-            position: absolute;
-            bottom: 4px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 12px;
-            height: 6px;
-            background: #000;
-            border: 1px solid #660000;
-        }
+.manananggal-mouth {
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 6px;
+    background: #000;
+    border: 1px solid #660000;
+}
 
-        .manananggal-mouth::before {
-            content: '';
-            position: absolute;
-            top: 1px;
-            left: 2px;
-            width: 2px;
-            height: 3px;
-            background: #ffffff;
-            box-shadow: 6px 0 0 #ffffff;
-        }
+.manananggal-mouth::before {
+    content: '';
+    position: absolute;
+    top: 1px;
+    left: 2px;
+    width: 2px;
+    height: 3px;
+    background: #ffffff;
+    box-shadow: 6px 0 0 #ffffff;
+}
 
-        .manananggal-torso {
-            width: 40px;
-            height: 32px;
-            background: #4a1c1c;
-            position: absolute;
-            top: 22px;
-            left: 10px;
-            border: 2px solid #2a0f0f;
-        }
+.manananggal-torso {
+    width: 40px;
+    height: 32px;
+    background: #4a1c1c;
+    position: absolute;
+    top: 22px;
+    left: 10px;
+    border: 2px solid #2a0f0f;
+}
 
-        .manananggal-torso::before {
-            content: '';
-            position: absolute;
-            top: 4px;
-            left: 6px;
-            width: 6px;
-            height: 6px;
-            background: #660000;
-            box-shadow: 
-                8px 0 0 #660000,
-                16px 0 0 #660000,
-                22px 0 0 #660000,
-                0 6px 0 #660000,
-                8px 6px 0 #660000,
-                16px 6px 0 #660000,
-                22px 6px 0 #660000,
-                4px 12px 0 #660000,
-                12px 12px 0 #660000,
-                20px 12px 0 #660000;
-        }
+.manananggal-torso::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 6px;
+    width: 6px;
+    height: 6px;
+    background: #660000;
+    box-shadow: 
+        8px 0 0 #660000,
+        16px 0 0 #660000,
+        22px 0 0 #660000,
+        0 6px 0 #660000,
+        8px 6px 0 #660000,
+        16px 6px 0 #660000,
+        22px 6px 0 #660000,
+        4px 12px 0 #660000,
+        12px 12px 0 #660000,
+        20px 12px 0 #660000;
+}
 
-        .manananggal-wing {
-            width: 28px;
-            height: 24px;
-            background: #8b0000;
-            position: absolute;
-            top: 18px;
-            border: 2px solid #660000;
-            animation: manananggalFlap 0.6s infinite alternate;
-        }
+.manananggal-wing {
+    width: 28px;
+    height: 24px;
+    background: #8b0000;
+    position: absolute;
+    top: 18px;
+    border: 2px solid #660000;
+    animation: manananggalFlap 0.6s infinite alternate;
+}
 
-        .manananggal-wing::before {
-            content: '';
-            position: absolute;
-            top: 2px;
-            left: 2px;
-            width: 4px;
-            height: 4px;
-            background: #cc0000;
-            box-shadow: 
-                6px 0 0 #cc0000,
-                12px 0 0 #cc0000,
-                18px 0 0 #cc0000,
-                0 6px 0 #cc0000,
-                6px 6px 0 #cc0000,
-                12px 6px 0 #cc0000,
-                0 12px 0 #cc0000,
-                6px 12px 0 #cc0000;
-        }
+.manananggal-wing::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 4px;
+    height: 4px;
+    background: #cc0000;
+    box-shadow: 
+        6px 0 0 #cc0000,
+        12px 0 0 #cc0000,
+        18px 0 0 #cc0000,
+        0 6px 0 #cc0000,
+        6px 6px 0 #cc0000,
+        12px 6px 0 #cc0000,
+        0 12px 0 #cc0000,
+        6px 12px 0 #cc0000;
+}
 
-        .manananggal-wing.left { 
-            left: -18px; 
-            transform-origin: right center;
-        }
-        .manananggal-wing.right { 
-            right: -18px;
-            transform-origin: left center;
-        }
+.manananggal-wing.left { 
+    left: -18px; 
+    transform-origin: right center;
+}
+.manananggal-wing.right { 
+    right: -18px;
+    transform-origin: left center;
+}
 
-        @keyframes manananggalFlap {
-            0% { transform: rotateZ(-15deg) scaleY(0.8); }
-            100% { transform: rotateZ(15deg) scaleY(1.2); }
-        }
+@keyframes manananggalFlap {
+    0% { transform: rotateZ(-15deg) scaleY(0.8); }
+    100% { transform: rotateZ(15deg) scaleY(1.2); }
+}
 
-        .manananggal-intestines {
-            width: 8px;
-            height: 40px;
-            background: linear-gradient(180deg, #8B0000 0%, #CC0000 20%, #FF3333 40%, #FF6666 60%, #FF9999 80%, #FFCCCC 100%);
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: intestineSwing 2.5s infinite ease-in-out;
-            border: 1px solid #660000;
-        }
+.manananggal-intestines {
+    width: 8px;
+    height: 40px;
+    background: linear-gradient(180deg, #8B0000 0%, #CC0000 20%, #FF3333 40%, #FF6666 60%, #FF9999 80%, #FFCCCC 100%);
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: intestineSwing 2.5s infinite ease-in-out;
+    border: 1px solid #660000;
+}
 
-        .manananggal-intestines::before {
-            content: '';
-            position: absolute;
-            top: 2px;
-            left: 1px;
-            width: 2px;
-            height: 2px;
-            background: #990000;
-            box-shadow: 
-                0 4px 0 #990000,
-                0 8px 0 #990000,
-                0 12px 0 #990000,
-                0 16px 0 #990000,
-                0 20px 0 #990000,
-                0 24px 0 #990000,
-                0 28px 0 #990000,
-                0 32px 0 #990000,
-                4px 2px 0 #990000,
-                4px 6px 0 #990000,
-                4px 10px 0 #990000,
-                4px 14px 0 #990000,
-                4px 18px 0 #990000,
-                4px 22px 0 #990000,
-                4px 26px 0 #990000,
-                4px 30px 0 #990000;
-        }
+.manananggal-intestines::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 1px;
+    width: 2px;
+    height: 2px;
+    background: #990000;
+    box-shadow: 
+        0 4px 0 #990000,
+        0 8px 0 #990000,
+        0 12px 0 #990000,
+        0 16px 0 #990000,
+        0 20px 0 #990000,
+        0 24px 0 #990000,
+        0 28px 0 #990000,
+        0 32px 0 #990000,
+        4px 2px 0 #990000,
+        4px 6px 0 #990000,
+        4px 10px 0 #990000,
+        4px 14px 0 #990000,
+        4px 18px 0 #990000,
+        4px 22px 0 #990000,
+        4px 26px 0 #990000,
+        4px 30px 0 #990000;
+}
 
-        @keyframes intestineSwing {
-            0%, 100% { transform: translateX(-50%) rotate(-8deg); }
-            50% { transform: translateX(-50%) rotate(8deg); }
-        }
+@keyframes intestineSwing {
+    0%, 100% { transform: translateX(-50%) rotate(-8deg); }
+    50% { transform: translateX(-50%) rotate(8deg); }
+}
 
-        /* POWER-UPS WITH SPRITE INTEGRATION */
-        .power-buff {
-            position: absolute;
-            width: 25px;
-            height: 25px;
-            background-image: url('assets/images/ui/power-buff.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            /* Fallback gradient */
-            background: radial-gradient(circle, #FFD700, #FFA500);
-            border-radius: 50%;
-            animation: float 2s infinite ease-in-out;
-            box-shadow: 0 0 15px #FFD700;
-            z-index: 3;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-        }
+/* POWER-UPS WITH SPRITE INTEGRATION */
+.power-buff {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background-image: url('assets/images/ui/power-buff.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* Fallback gradient */
+    background: radial-gradient(circle, #FFD700, #FFA500);
+    border-radius: 50%;
+    animation: float 2s infinite ease-in-out;
+    box-shadow: 0 0 15px #FFD700;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
 
-        .machete-buff {
-            position: absolute;
-            width: 25px;
-            height: 25px;
-            background-image: url('assets/images/ui/machete-buff.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            /* Fallback gradient */
-            background: radial-gradient(circle, #00FF00, #32CD32);
-            border-radius: 50%;
-            animation: float 2s infinite ease-in-out;
-            box-shadow: 0 0 15px #00FF00;
-            z-index: 3;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            font-weight: bold;
-        }
+.machete-buff {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background-image: url('assets/images/ui/machete-buff.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* Fallback gradient */
+    background: radial-gradient(circle, #00FF00, #32CD32);
+    border-radius: 50%;
+    animation: float 2s infinite ease-in-out;
+    box-shadow: 0 0 15px #00FF00;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: bold;
+}
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) scale(1); }
-            50% { transform: translateY(-15px) scale(1.1); }
-        }
+@keyframes float {
+    0%, 100% { transform: translateY(0px) scale(1); }
+    50% { transform: translateY(-15px) scale(1.1); }
+}
 
-        /* ENHANCED UI WITH CUSTOM FONTS */
-        @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Press+Start+2P&display=swap');
+/* ENHANCED UI WITH CUSTOM FONTS */
+@import url('https://fonts.googleapis.com/css2?family=Creepster&family=Press+Start+2P&display=swap');
 
-        .hud {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background-image: url('assets/images/ui/hud-panel.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            /* Fallback background */
-            background-color: rgba(0,0,0,0.9);
-            padding: 15px;
-            border-radius: 10px;
-            font-family: 'Press Start 2P', monospace, Arial;
-            font-size: 10px;
-            z-index: 20;
-            border: 2px solid #444;
-            backdrop-filter: blur(5px);
-            min-width: 200px;
-            line-height: 1.5;
-        }
+.hud {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background-image: url('assets/images/ui/hud-panel.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    /* Fallback background */
+    background-color: rgba(0,0,0,0.9);
+    padding: 15px;
+    border-radius: 10px;
+    font-family: 'Press Start 2P', monospace, Arial;
+    font-size: 10px;
+    z-index: 20;
+    border: 2px solid #444;
+    backdrop-filter: blur(5px);
+    min-width: 200px;
+    line-height: 1.5;
+}
 
-        .hud div {
-            margin-bottom: 5px;
-        }
+.hud div {
+    margin-bottom: 5px;
+}
 
-        .controls {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            text-align: center;
-            background: rgba(0,0,0,0.9);
-            padding: 15px 25px;
-            border-radius: 15px;
-            color: white;
-            border: 2px solid #444;
-            backdrop-filter: blur(5px);
-            font-family: 'Press Start 2P', monospace, Arial;
-            font-size: 8px;
-            line-height: 1.4;
-        }
+.controls {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    background: rgba(0,0,0,0.9);
+    padding: 15px 25px;
+    border-radius: 15px;
+    color: white;
+    border: 2px solid #444;
+    backdrop-filter: blur(5px);
+    font-family: 'Press Start 2P', monospace, Arial;
+    font-size: 8px;
+    line-height: 1.4;
+}
 
-        .controls h3 {
-            margin-bottom: 10px;
-            color: #FFD700;
-        }
+.controls h3 {
+    margin-bottom: 10px;
+    color: #FFD700;
+}
 
-        .controls p {
-            margin-bottom: 5px;
-        }
+.controls p {
+    margin-bottom: 5px;
+}
 
-        .game-over {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(139, 0, 0, 0.95);
-            padding: 40px;
-            border-radius: 20px;
-            text-align: center;
-            color: white;
-            font-family: 'Creepster', cursive;
-            font-size: 28px;
-            z-index: 100;
-            display: none;
-            border: 3px solid #660000;
-            backdrop-filter: blur(10px);
-        }
+/* ENHANCED GAME OVER SCREEN WITH GOOGLE SHEETS INTEGRATION */
+.game-over {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, rgba(139, 0, 0, 0.95), rgba(75, 0, 0, 0.95));
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    color: white;
+    font-family: 'Creepster', cursive;
+    z-index: 100;
+    display: none;
+    border: 3px solid #660000;
+    backdrop-filter: blur(10px);
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+}
 
-        .restart-btn {
-            background: linear-gradient(45deg, #4CAF50, #45a049);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-family: 'Press Start 2P', monospace;
-            font-size: 12px;
-            margin-top: 20px;
-            transition: all 0.3s;
-            border: 2px solid #2e7d32;
-        }
+.game-over-title {
+    font-size: 28px;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
 
-        .restart-btn:hover {
-            background: linear-gradient(45deg, #45a049, #4CAF50);
-            transform: scale(1.05);
-        }
+.final-stats {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px;
+    margin-bottom: 25px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #444;
+}
 
-        /* Walking animation */
-        .walking .arm.left, .walking .leg.right {
-            animation: walkForward 0.4s infinite;
-        }
+.stat-row {
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-        .walking .arm.right, .walking .leg.left {
-            animation: walkBackward 0.4s infinite;
-        }
+.stat-row span {
+    color: #FFD700;
+}
 
-        @keyframes walkForward {
-            0%, 100% { transform: rotate(0deg); }
-            50% { transform: rotate(15deg); }
-        }
+.score-form {
+    margin: 20px 0;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    border: 1px solid #444;
+}
 
-        @keyframes walkBackward {
-            0%, 100% { transform: rotate(0deg); }
-            50% { transform: rotate(-15deg); }
-        }
+.name-input {
+    width: 250px;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 2px solid #444;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    text-align: center;
+}
 
-        .title {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            font-family: 'Creepster', cursive;
-            font-size: 24px;
-            font-weight: bold;
-            color: #FFD700;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-            z-index: 20;
-        }
+.name-input::placeholder {
+    color: #ccc;
+}
 
-        /* DEBUG INFO */
-        .debug-info {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(0,0,0,0.8);
-            padding: 10px;
-            border-radius: 5px;
-            font-family: monospace;
-            font-size: 10px;
-            color: #ccc;
-            z-index: 20;
-            line-height: 1.3;
-            max-width: 200px;
-        }
+.submit-btn, .view-leaderboard-btn {
+    background: linear-gradient(45deg, #FFD700, #FFA500);
+    color: #000;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    margin: 5px;
+    transition: all 0.3s;
+    border: 2px solid #CC8400;
+}
 
-        .debug-info h4 {
-            color: #FFD700;
-            margin-bottom: 5px;
-        }
+.submit-btn:hover, .view-leaderboard-btn:hover {
+    background: linear-gradient(45deg, #FFA500, #FFD700);
+    transform: scale(1.05);
+}
 
-        /* Loading indicator */
-        .loading-indicator {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-family: 'Press Start 2P', monospace;
-            font-size: 16px;
-            z-index: 50;
-            display: none;
-        }
+.submit-btn:disabled {
+    background: #666;
+    color: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.leaderboard-section {
+    margin: 20px 0;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    border: 1px solid #444;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.leaderboard-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px;
+    color: #FFD700;
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.leaderboard-list {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+}
+
+.leaderboard-entry {
+    display: grid;
+    grid-template-columns: 40px 1fr 80px 60px 50px 60px;
+    gap: 10px;
+    padding: 8px;
+    margin-bottom: 5px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 5px;
+    border: 1px solid #333;
+    align-items: center;
+}
+
+.leaderboard-entry.rank-1 {
+    background: linear-gradient(90deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.1));
+    border-color: #FFD700;
+}
+
+.leaderboard-entry.rank-2 {
+    background: linear-gradient(90deg, rgba(192, 192, 192, 0.2), rgba(192, 192, 192, 0.1));
+    border-color: #C0C0C0;
+}
+
+.leaderboard-entry.rank-3 {
+    background: linear-gradient(90deg, rgba(205, 127, 50, 0.2), rgba(205, 127, 50, 0.1));
+    border-color: #CD7F32;
+}
+
+.rank {
+    text-align: center;
+    font-weight: bold;
+}
+
+.player-name {
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.score, .kills, .machetes, .time {
+    text-align: center;
+    color: #FFD700;
+}
+
+.loading {
+    color: #ccc;
+    font-style: italic;
+}
+
+.no-scores, .error {
+    color: #ccc;
+    font-style: italic;
+    padding: 20px;
+}
+
+.restart-btn {
+    background: linear-gradient(45deg, #4CAF50, #45a049);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px;
+    margin-top: 20px;
+    transition: all 0.3s;
+    border: 2px solid #2e7d32;
+}
+
+.restart-btn:hover {
+    background: linear-gradient(45deg, #45a049, #4CAF50);
+    transform: scale(1.05);
+}
+
+/* Walking animation */
+.walking .arm.left, .walking .leg.right {
+    animation: walkForward 0.4s infinite;
+}
+
+.walking .arm.right, .walking .leg.left {
+    animation: walkBackward 0.4s infinite;
+}
+
+@keyframes walkForward {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(15deg); }
+}
+
+@keyframes walkBackward {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(-15deg); }
+}
+
+.title {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    font-family: 'Creepster', cursive;
+    font-size: 24px;
+    font-weight: bold;
+    color: #FFD700;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+    z-index: 20;
+}
+
+/* DEBUG INFO */
+.debug-info {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.8);
+    padding: 10px;
+    border-radius: 5px;
+    font-family: monospace;
+    font-size: 10px;
+    color: #ccc;
+    z-index: 20;
+    line-height: 1.3;
+    max-width: 200px;
+}
+
+.debug-info h4 {
+    color: #FFD700;
+    margin-bottom: 5px;
+}
+
+/* Loading indicator */
+.loading-indicator {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 16px;
+    z-index: 50;
+    display: none;
+}
