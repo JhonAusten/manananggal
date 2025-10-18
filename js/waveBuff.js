@@ -18,7 +18,7 @@ class WaveBuff {
         const buff = document.createElement('div');
         buff.className = 'wave-buff';
         if (!window.assetStatus || !window.assetStatus['Wave Buff']) {
-            buff.innerHTML = '';
+            buff.innerHTML = '~';
         }
         return buff;
     }
@@ -159,4 +159,5 @@ const waveSystem = {
         this.swordWaves = [];
         this.updateBulletDisplay();
     }
+
 };
