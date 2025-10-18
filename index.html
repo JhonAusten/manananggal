@@ -33,6 +33,7 @@
         <div class="hud">
             <div>Machetes: <span id="macheteCount">1</span></div>
             <div>Durability: <span id="durability">100</span></div>
+            <div id="waveAmmo" class="hud-stat">0</div>
             <div>Score: <span id="score">0</span></div>
             <div>Killed: <span id="kills">0</span></div>
         </div>
@@ -76,7 +77,7 @@
                 <h3 class="leaderboard-title">🏆 TOP SURVIVORS 🏆</h3>
                 <div id="leaderboardList" class="leaderboard-list">
                     <!-- Leaderboard entries will be populated here -->
-                </div>
+                </div>  
             </div>
 
             <button class="restart-btn" onclick="restartGame()">Play Again</button>
@@ -94,6 +95,16 @@
         <h4>Asset Status:</h4>
         <div id="assetStatus">Checking...</div>
     </div>
-<script src="script.js"></script>
+<script src="js/scoreManager.js"></script>
+<script src="js/audioManager.js"></script>
+<script src="js/assetChecker.js"></script>
+<script src="js/characterAnimator.js"></script>
+<script src="js/manananggalAnimator.js"></script>
+<script src="js/waveBuff.js"></script>
+<script src="js/entities.js"></script>
+<script src="js/gameLogic.js"></script>
+<script src="js/input.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/init.js"></script>
 </body>
 </html>
