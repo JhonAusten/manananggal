@@ -136,19 +136,16 @@ body {
 /* MACHETE WITH SPRITE INTEGRATION */
 .machete {
     position: absolute;
-    width: 45px;
-    height: 6px;
+    width: 48px;
+    height: 48px;
     background-image: url('assets/images/weapons/machete.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     /* Fallback gradient */
-    background: linear-gradient(90deg, #654321, #C0C0C0, #E5E5E5);
     border-radius: 3px;
     transform-origin: center;
     z-index: 5;
-    box-shadow: 0 0 8px rgba(192, 192, 192, 0.6);
-    border: 1px solid #888;
 }
 
 /* Hide CSS machete details if sprite loads */
@@ -183,8 +180,8 @@ body {
 /* MANANANGGAL WITH SPRITE INTEGRATION */
 .manananggal {
     position: absolute;
-    width: 78px;
-    height: 106px;
+    width: 125px;
+    height: 126px;
     z-index: 8;
     background-image: url('assets/images/monsters/manananggal.png');
     background-size: contain;
@@ -385,7 +382,6 @@ body {
     background-repeat: no-repeat;
     background-position: center;
     /* Fallback gradient */
-    background: radial-gradient(circle, #FFD700, #FFA500);
     border-radius: 50%;
     animation: float 2s infinite ease-in-out;
     box-shadow: 0 0 15px #FFD700;
@@ -405,7 +401,6 @@ body {
     background-repeat: no-repeat;
     background-position: center;
     /* Fallback gradient */
-    background: radial-gradient(circle, #00FF00, #32CD32);
     border-radius: 50%;
     animation: float 2s infinite ease-in-out;
     box-shadow: 0 0 15px #00FF00;
@@ -416,7 +411,40 @@ body {
     font-size: 16px;
     font-weight: bold;
 }
-
+.wave-buff {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-image: url('assets/images/ui/wave-buff.png');
+    background-size: 40px 40px;
+    background-repeat: no-repeat;
+    background-position: center;
+    animation: wave-float 2s ease-in-out infinite;
+}
+.wave-buff:not(.sprite-loaded) {
+    font-size: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+@keyframes wave-float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+.sword-wave {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-image: url('assets/images/weapons/sword-wave.png');
+    background-size: 30px 30px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.sword-wave:not(.sprite-loaded) {
+    background: linear-gradient(45deg, #FFD700, #FFA500);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+}
 @keyframes float {
     0%, 100% { transform: translateY(0px) scale(1); }
     50% { transform: translateY(-15px) scale(1.1); }
