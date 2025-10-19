@@ -7,10 +7,44 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="menu-screen" id="menuScreen">
+        <div class="menu-container">
+            <div class="menu-title">MANANANGGAL SURVIVAL</div>
+            
+            <div class="menu-subtitle">Filipino Horror Game</div>
+            
+            <div class="menu-description">
+                <p>Survive the attack of the Manananggal!</p>
+                <p>Use your rotating machetes to defend yourself.</p>
+                <p>Collect buffs to power up and stay alive.</p>
+            </div>
+
+            <div class="menu-controls">
+                <h3>How to Play</h3>
+                <ul>
+                    <li>WASD / Arrow Keys - Move</li>
+                    <li>Hold Shift - Run</li>
+                    <li>Left Mouse Click - Shoot Wave Attack</li>
+                    <li>Avoid the Manananggal!</li>
+                </ul>
+            </div>
+
+            <button class="menu-btn start-btn" onclick="menuScreen.startGame()">START GAME</button>
+            <button class="menu-btn leaderboard-btn" onclick="menuScreen.viewLeaderboard()">LEADERBOARD</button>
+        </div>
+    </div>
     <!-- Audio preloads -->
     <audio id="macheteHit" preload="auto">
         <source src="assets/audio/effects/machete-hit.mp3" type="audio/mpeg">
         <source src="assets/audio/effects/machete-hit.wav" type="audio/wav">
+    </audio>
+    <audio id="characterDeath" preload="auto">
+        <source src="assets/audio/effects/character-death.mp3" type="audio/mpeg">
+        <source src="assets/audio/effects/character-death.ogg" type="audio/ogg">
+    </audio>
+    <audio id="shockwave" preload="auto">
+        <source src="assets/audio/effects/wave.mp3" type="audio/mpeg">
+        <source src="assets/audio/effects/wave.wav" type="audio/wav">
     </audio>
     <audio id="monsterDeath" preload="auto">
         <source src="assets/audio/effects/monster-death.mp3" type="audio/mpeg">
@@ -30,12 +64,33 @@
     <div class="title">Manananggal Survival</div>
     
     <div class="game-area" id="gameArea">
-        <div class="hud">
-            <div>Machetes: <span id="macheteCount">1</span></div>
-            <div>Durability: <span id="durability">100</span></div>
-            <span>Sword wave</span><div id="waveAmmo" class="hud-stat">0</div>
-            <div>Score: <span id="score">0</span></div>
-            <div>Killed: <span id="kills">0</span></div>
+        <div id="hudPanel" class="hud-panel">
+            <div class="hud-content">
+                <div class="hud-stat">
+                    <span class="label">Score:</span>
+                    <span id="score">0</span>
+                </div>
+                
+                <div class="hud-stat">
+                    <span class="label">Kills:</span>
+                    <span id="kills">0</span>
+                </div>
+                
+                <div class="hud-stat">
+                    <span class="label">Machetes:</span>
+                    <span id="macheteCount">1</span>
+                </div>
+                
+                <div class="hud-stat">
+                    <span class="label">Durability:</span>
+                    <span id="durability">100</span>
+                </div>
+                
+                <div class="hud-stat">
+                    <span class="label">Wave Ammo:</span>
+                    <span id="waveAmmo">0</span>
+                </div>
+            </div>
         </div>
         
         <div class="character" id="character">
@@ -84,29 +139,29 @@
         </div>
     </div>
 
-    <div class="controls">
+    <div class="controls" hidden>
         <h3>Controls</h3>
         <p>Arrow Keys or WASD to move | Hold Shift to run</p>
         <p>🟡 Power Buffs increase machete power | 🟢 Machete Buffs add extra machetes</p>
         <p>Survive the Manananggal attack!</p>
     </div>
 
-    <div class="debug-info" id="debugInfo">
+    <div class="debug-info" id="debugInfo" hidden>
         <h4>Asset Status:</h4>
         <div id="assetStatus">Checking...</div>
     </div>
-<script src="js/scoreManager.js"></script>
-<script src="js/audioManager.js"></script>
-<script src="js/assetChecker.js"></script>
-<script src="js/characterAnimator.js"></script>
-<script src="js/manananggalAnimator.js"></script>
-<script src="js/waveBuff.js"></script>
-<script src="js/entities.js"></script>
-<script src="js/gameLogic.js"></script>
-<script src="js/input.js"></script>
-<script src="js/ui.js"></script>
-<script src="js/init.js"></script>
+    <script src="js/menuScreen.js"></script>
+    <script src="js/scoreManager.js"></script>
+    <script src="js/audioManager.js"></script>
+    <script src="js/assetChecker.js"></script>
+    <script src="js/characterAnimator.js"></script>
+    <script src="js/manananggalAnimator.js"></script>
+    <script src="js/deathAnimation.js"></script>
+    <script src="js/waveBuff.js"></script>
+    <script src="js/entities.js"></script>
+    <script src="js/gameLogic.js"></script>
+    <script src="js/input.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/init.js"></script>
 </body>
 </html>
-
-
