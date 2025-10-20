@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manananggal Slayer</title>
+    <title>Manananggal Survival Game - Enhanced with Asset Integration</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="menu-screen" id="menuScreen">
         <div class="menu-container">
-            <div class="menu-title">MANANANGGAL SLAYER</div>
+            <div class="menu-title">MANANANGGAL SURVIVAL</div>
             
             <div class="menu-subtitle">Filipino Horror Game</div>
             
@@ -61,7 +61,7 @@
 
     <div class="loading-indicator" id="loadingIndicator">Loading Assets...</div>
     
-    <div class="title">Manananggal Slayer</div>
+    <div class="title">Manananggal Survival</div>
     
     <div class="game-area" id="gameArea">
         <div id="hudPanel" class="hud-panel">
@@ -114,10 +114,10 @@
             <div class="game-over-title">GAME OVER!</div>
             
             <div class="final-stats">
-                <div class="stat-row">Final Score: <span id="finalScore">0</span></div>
-                <div class="stat-row">Monsters Killed: <span id="finalKills">0</span></div>
-                <div class="stat-row">Machetes Obtained: <span id="finalMachetes">1</span></div>
-                <div class="stat-row">Survival Time: <span id="finalSurvivalTime">0:00</span></div>
+                <div class="stat-row">Score: <span id="finalScore">0</span></div>
+                <div class="stat-row">Kills: <span id="finalKills">0</span></div>
+                <div class="stat-row">Machetes: <span id="finalMachetes">1</span></div>
+                <div class="stat-row">Time: <span id="finalSurvivalTime">0:00</span></div>
             </div>
 
             <!-- Score submission form -->
@@ -134,8 +134,8 @@
                     <!-- Leaderboard entries will be populated here -->
                 </div>  
             </div>
-
-            <button class="restart-btn" onclick="restartGame()">Play Again</button>
+                <button class="restart-btn" onclick="restartGame()">Play Again</button>
+                <button class="restart-btn" onclick="backToMenuFromGameOver()">Back to Menu</button>
         </div>
     </div>
 
@@ -150,6 +150,7 @@
         <h4>Asset Status:</h4>
         <div id="assetStatus">Checking...</div>
     </div>
+    <script src="js/pauseQuit.js"></script>
     <script src="js/menuScreen.js"></script>
     <script src="js/scoreManager.js"></script>
     <script src="js/audioManager.js"></script>
@@ -165,4 +166,3 @@
     <script src="js/init.js"></script>
 </body>
 </html>
-
