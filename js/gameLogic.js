@@ -9,7 +9,7 @@ let gameState = {
     macheteBuffs: [],
     waveBufls: [],
     macheteCount: 1,
-    durability: 100,
+    durability: 50,
     score: 0,
     kills: 0,
     gameRunning: true,
@@ -136,7 +136,7 @@ function gameLoop() {
             if (machete.checkCollision(manananggal)) {
                 audioManager.play('macheteHit');
                 
-                machete.durability -= 8;
+                machete.durability -= 10;
                 
                 audioManager.play('monsterDeath');
                 manananggal.destroy();
@@ -148,11 +148,6 @@ function gameLoop() {
                     machete.destroy();
                     gameState.machetes.splice(bIndex, 1);
                     gameState.macheteCount--;
-                    
-                    if (gameState.machetes.length === 0) {
-                        gameOver();
-                        return;
-                    }
                 }
                 break;
             }
@@ -169,7 +164,7 @@ function gameLoop() {
             gameState.powerBuffs.splice(index, 1);
             
             gameState.machetes.forEach(machete => {
-                machete.durability = Math.min(machete.durability + 60, 100);
+                machete.durability = Math.min(machete.durability + 50, 50);
             });
             gameState.score += 8;
         }
@@ -184,7 +179,7 @@ function gameLoop() {
             gameState.macheteBuffs.splice(index, 1);
             
             const angle = Math.random() * Math.PI * 2;
-            gameState.machetes.push(new Machete(gameState.character.x, gameState.character.y, angle, 100));
+            gameState.machetes.push(new Machete(gameState.character.x, gameState.character.y, angle, 50));
             gameState.macheteCount++;
             gameState.score += 20;
         }
