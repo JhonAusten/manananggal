@@ -1,6 +1,6 @@
 // Enhanced Machete class with better rotation matching character size
 class Machete {
-    constructor(x, y, angle, durability = 100) {
+    constructor(x, y, angle, durability = 50) {
         this.x = x;
         this.y = y;
         this.angle = angle;
