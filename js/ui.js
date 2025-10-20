@@ -106,18 +106,26 @@ async function showLeaderboard() {
 function restartGame() {
     deathAnimation.stop();
     
-    // Destroy all game entities
-    gameState.machetes.forEach(machete => machete.destroy());
-    gameState.manananggals.forEach(manananggal => manananggal.destroy());
-    gameState.powerBuffs.forEach(buff => buff.destroy());
-    gameState.macheteBuffs.forEach(buff => buff.destroy());
-    gameState.waveBufls.forEach(buff => buff.destroy());
+    // COMPLETELY clear the game area of all DOM elements
+    const gameArea = document.getElementById('gameArea');
+    const allElements = gameArea.querySelectorAll('.machete, .manananggal, .power-buff, .machete-buff, .wave-buff, .sword-wave');
+    allElements.forEach(el => el.remove());
+    
+    // Destroy all game entities (clear arrays)
+    gameState.machetes = [];
+    gameState.manananggals = [];
+    gameState.powerBuffs = [];
+    gameState.macheteBuffs = [];
+    gameState.waveBufls = [];
     
     // Clear wave system
-    waveSystem.reset();
+    if (typeof waveSystem !== 'undefined' && waveSystem.reset) {
+        waveSystem.reset();
+    }
     
     // Clear all spawn intervals
     gameState.spawnIntervals.forEach(interval => clearInterval(interval));
+    gameState.spawnIntervals = [];
 
     // Reset game state
     gameState = {
@@ -128,7 +136,7 @@ function restartGame() {
         macheteBuffs: [],
         waveBufls: [],
         macheteCount: 1,
-        durability: 100,
+        durability: 50,
         score: 0,
         kills: 0,
         gameRunning: true,
@@ -142,10 +150,11 @@ function restartGame() {
         playerName: ''
     };
 
-    // Reset character position and animation
+    // Reset character position
     const character = document.getElementById('character');
     character.style.left = gameState.character.x + 'px';
     character.style.top = gameState.character.y + 'px';
+    character.style.backgroundImage = "url('assets/images/characters/character-idle.png')";
     
     characterAnimator.resetAnimation();
     characterAnimator.updateAnimation(character, 'idle', true);
@@ -167,7 +176,7 @@ function restartGame() {
     }
 
     // Resume music
-    if (userInteracted) {
+    if (typeof userInteracted !== 'undefined' && userInteracted) {
         audioManager.startBackgroundMusic();
     }
 
@@ -175,9 +184,75 @@ function restartGame() {
     createInitialMachetes();
     startSpawning();
     
-    console.log('Game restarted');
+    console.log('Game restarted - all entities cleared');
+}
+function backToMenuFromGameOver() {
+    // Clear all game intervals
+    gameState.spawnIntervals.forEach(interval => clearInterval(interval));
+    gameState.spawnIntervals = [];
+
+    // COMPLETELY clear the game area of all DOM elements
+    const gameArea = document.getElementById('gameArea');
+    const allElements = gameArea.querySelectorAll('.machete, .manananggal, .power-buff, .machete-buff, .wave-buff, .sword-wave');
+    allElements.forEach(el => el.remove());
+
+    // Destroy all entities (clear arrays)
+    gameState.machetes = [];
+    gameState.manananggals = [];
+    gameState.powerBuffs = [];
+    gameState.macheteBuffs = [];
+    gameState.waveBufls = [];
+    
+    if (typeof waveSystem !== 'undefined' && waveSystem.reset) {
+        waveSystem.reset();
+    }
+
+    // Reset game state completely
+    gameState = {
+        character: { x: window.innerWidth / 2, y: window.innerHeight / 2 },
+        machetes: [],
+        manananggals: [],
+        powerBuffs: [],
+        macheteBuffs: [],
+        waveBufls: [],
+        macheteCount: 1,
+        durability: 50,
+        score: 0,
+        kills: 0,
+        gameRunning: false,
+        keys: {},
+        moveSpeed: 4,
+        isMoving: false,
+        isRunning: false,
+        spawnIntervals: [],
+        characterState: 'idle',
+        gameStartTime: null,
+        playerName: ''
+    };
+
+    // Reset character
+    const character = document.getElementById('character');
+    character.style.left = gameState.character.x + 'px';
+    character.style.top = gameState.character.y + 'px';
+    character.style.backgroundImage = "url('assets/images/characters/character-idle.png')";
+    characterAnimator.resetAnimation();
+
+    gameState.gameRunning = false;
+    audioManager.stopBackgroundMusic();
+
+    // Hide game over, show menu
+    document.getElementById('gameOver').style.display = 'none';
+    document.getElementById('menuScreen').style.display = 'flex';
+
+    // Reset menu to main screen
+    if (typeof menuScreen !== 'undefined' && menuScreen.backToMenu) {
+        menuScreen.backToMenu();
+    }
+
+    console.log('Returned to menu - all reset');
 }
 
 window.restartGame = restartGame;
 window.submitScoreToSheet = submitScoreToSheet;
 window.showLeaderboard = showLeaderboard;
+window.backToMenuFromGameOver = backToMenuFromGameOver;
