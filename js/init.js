@@ -22,6 +22,12 @@ async function initializeGame() {
         window.pauseMenuInitialized = true;
     }
     
+    // Initialize mobile controls (only once)
+    if (!window.mobileControlsInitialized) {
+        mobileControls.init();
+        window.mobileControlsInitialized = true;
+    }
+    
     // Start game loop (only once)
     if (!window.gameLoopStarted) {
         setInterval(gameLoop, 16); // 60fps
@@ -31,6 +37,11 @@ async function initializeGame() {
     // Set game running
     gameState.gameRunning = true;
     audioManager.startBackgroundMusic();
+    
+    // Show mobile controls if on mobile
+    if (mobileControls.isMobile()) {
+        mobileControls.show();
+    }
     
     console.log('Game initialized successfully!');
 }
@@ -53,6 +64,11 @@ function resumeGameFromMenu() {
     // Set game running
     gameState.gameRunning = true;
     audioManager.startBackgroundMusic();
+    
+    // Show mobile controls if on mobile
+    if (mobileControls.isMobile()) {
+        mobileControls.show();
+    }
     
     console.log('Game resumed from menu!');
 }
