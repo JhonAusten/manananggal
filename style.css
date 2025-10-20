@@ -962,3 +962,166 @@ body {
     background-repeat: no-repeat;
     overflow: hidden;
 }
+/* PAUSE MENU */
+.pause-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 300;
+    backdrop-filter: blur(5px);
+}
+
+.pause-container {
+    background: linear-gradient(135deg, rgba(139, 0, 0, 0.95), rgba(75, 0, 0, 0.95));
+    padding: 50px;
+    border-radius: 20px;
+    text-align: center;
+    border: 3px solid #660000;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+}
+
+.pause-title {
+    font-family: 'Creepster', cursive;
+    font-size: 48px;
+    color: #FFD700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    margin-bottom: 30px;
+}
+
+.pause-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.pause-btn {
+    background: linear-gradient(45deg, #FFD700, #FFA500);
+    color: #000;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px;
+    transition: all 0.3s;
+    border: 2px solid #CC8400;
+}
+
+.pause-btn:hover {
+    background: linear-gradient(45deg, #FFA500, #FFD700);
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.resume-btn {
+    background: linear-gradient(45deg, #4CAF50, #45a049);
+    border-color: #2e7d32;
+    color: white;
+}
+
+.resume-btn:hover {
+    background: linear-gradient(45deg, #45a049, #4CAF50);
+    box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
+}
+
+.quit-btn {
+    background: linear-gradient(45deg, #FF6B6B, #FF0000);
+    border-color: #CC0000;
+    color: white;
+}
+
+.quit-btn:hover {
+    background: linear-gradient(45deg, #FF0000, #FF6B6B);
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+}
+
+/* QUIT CONFIRMATION */
+.quit-confirm {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 400;
+    backdrop-filter: blur(5px);
+}
+
+.confirm-container {
+    background: linear-gradient(135deg, rgba(139, 0, 0, 0.95), rgba(75, 0, 0, 0.95));
+    padding: 40px 60px;
+    border-radius: 20px;
+    text-align: center;
+    border: 3px solid #FF0000;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+}
+
+.confirm-title {
+    font-family: 'Creepster', cursive;
+    font-size: 36px;
+    color: #FF0000;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    margin-bottom: 15px;
+}
+
+.confirm-message {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px;
+    color: #FFD700;
+    margin-bottom: 25px;
+}
+
+.confirm-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.confirm-btn {
+    background: linear-gradient(45deg, #FFD700, #FFA500);
+    color: #000;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px;
+    transition: all 0.3s;
+    border: 2px solid #CC8400;
+}
+
+.confirm-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.yes-btn {
+    background: linear-gradient(45deg, #FF6B6B, #FF0000);
+    border-color: #CC0000;
+    color: white;
+}
+
+.yes-btn:hover {
+    background: linear-gradient(45deg, #FF0000, #FF6B6B);
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+}
+
+.no-btn {
+    background: linear-gradient(45deg, #4CAF50, #45a049);
+    border-color: #2e7d32;
+    color: white;
+}
+
+.no-btn:hover {
+    background: linear-gradient(45deg, #45a049, #4CAF50);
+    box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
+}
