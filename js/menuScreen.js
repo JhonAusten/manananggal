@@ -51,9 +51,9 @@ const menuScreen = {
                     <div class="menu-leaderboard-entry rank-${entry.rank}">
                         <span class="rank">${medal}</span>
                         <span class="player-name">${entry.playerName}</span>
-                        <span class="score">Score: ${entry.score}</span>
-                        <span class="kills">Kills: ${entry.kills}</span>
-                        <span class="time"></span>
+                        <span class="score">${entry.score}</span>
+                        <span class="kills">${entry.kills}</span>
+                        <span class="time">${entry.survivalTime}</span>
                     </div>
                 `;
             });
@@ -66,7 +66,31 @@ const menuScreen = {
     },
 
     backToMenu() {
-        this.init();
+        const menuContainer = document.querySelector('.menu-container');
+        menuContainer.innerHTML = `
+            <div class="menu-title">MANANANGGAL SURVIVAL</div>
+            
+            <div class="menu-subtitle">Filipino Horror Game</div>
+            
+            <div class="menu-description">
+                <p>Survive the attack of the Manananggal!</p>
+                <p>Use your rotating machetes to defend yourself.</p>
+                <p>Collect buffs to power up and stay alive.</p>
+            </div>
+
+            <div class="menu-controls">
+                <h3>How to Play</h3>
+                <ul>
+                    <li>WASD / Arrow Keys - Move</li>
+                    <li>Shift - Run</li>
+                    <li>Left Mouse Click - Shoot Wave Attack</li>
+                    <li>Avoid the Manananggal!</li>
+                </ul>
+            </div>
+
+            <button class="menu-btn start-btn" onclick="menuScreen.startGame()">START GAME</button>
+            <button class="menu-btn leaderboard-btn" onclick="menuScreen.viewLeaderboard()">LEADERBOARD</button>
+        `;
     },
 
     closeMenu() {
