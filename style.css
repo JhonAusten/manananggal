@@ -1125,3 +1125,199 @@ body {
     background: linear-gradient(45deg, #45a049, #4CAF50);
     box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
 }
+
+/* MOBILE CONTROLS */
+.mobile-controls {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 200px;
+    display: none;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 20px;
+    z-index: 150;
+    pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    .mobile-controls {
+        display: flex;
+    }
+}
+
+/* JOYSTICK */
+.joystick-container {
+    pointer-events: all;
+}
+
+.joystick-base {
+    width: 120px;
+    height: 120px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 3px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    position: relative;
+    touch-action: none;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.joystick-handle {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    border: 3px solid #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+}
+
+/* MOBILE BUTTONS */
+.mobile-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    pointer-events: all;
+}
+
+.mobile-btn {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    touch-action: none;
+}
+
+.fire-btn {
+    background: linear-gradient(135deg, #FF6B6B, #FF0000);
+}
+
+.fire-btn:active {
+    transform: scale(0.9);
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.8);
+}
+
+.pause-mobile-btn {
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+}
+
+.pause-mobile-btn:active {
+    transform: scale(0.9);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+}
+
+/* ORIENTATION WARNING */
+.orientation-warning {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 500;
+}
+
+.orientation-content {
+    text-align: center;
+    color: white;
+    font-family: 'Press Start 2P', monospace;
+}
+
+.rotate-icon {
+    font-size: 80px;
+    margin-bottom: 30px;
+    animation: rotate-pulse 2s infinite;
+}
+
+@keyframes rotate-pulse {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(90deg) scale(1.2); }
+}
+
+.orientation-content h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #FFD700;
+}
+
+.orientation-content p {
+    font-size: 12px;
+    color: #ccc;
+}
+
+/* RESPONSIVE ADJUSTMENTS */
+@media (max-width: 768px) {
+    .controls {
+        display: none;
+    }
+    
+    .hud-panel {
+        width: 150px;
+        min-width: 150px;
+        min-height: 150px;
+        opacity: 0.8;
+    }
+    
+    .hud-content {
+        padding: 15px;
+        font-size: 10px;
+    }
+    
+    .hud-stat {
+        font-size: 9px;
+        margin: 5px 0;
+        min-width: 100px;
+    }
+    
+    .title {
+        font-size: 18px;
+        top: 10px;
+        right: 10px;
+    }
+    
+    .debug-info {
+        font-size: 8px;
+        bottom: 210px;
+        right: 10px;
+        max-width: 150px;
+    }
+}
+
+/* LANDSCAPE MODE OPTIMIZATION */
+@media (max-width: 900px) and (orientation: landscape) {
+    .mobile-controls {
+        height: 180px;
+        padding: 15px;
+    }
+    
+    .joystick-base {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .joystick-handle {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .mobile-btn {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+    }
+}
