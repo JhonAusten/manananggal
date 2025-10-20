@@ -1266,35 +1266,84 @@ body {
         display: none;
     }
     
+    /* Smaller HUD Panel */
     .hud-panel {
-        width: 150px;
-        min-width: 150px;
-        min-height: 150px;
+        width: 120px;
+        min-width: 120px;
+        min-height: 120px;
         opacity: 0.8;
+        top: 10px;
+        left: 10px;
     }
     
     .hud-content {
-        padding: 15px;
-        font-size: 10px;
+        padding: 10px;
+        font-size: 8px;
     }
     
     .hud-stat {
-        font-size: 9px;
-        margin: 5px 0;
-        min-width: 100px;
+        font-size: 7px;
+        margin: 4px 0;
+        min-width: 80px;
+    }
+    
+    /* Smaller Character */
+    .character {
+        width: 44px;
+        height: 65px;
+        transform: scale(0.5);
+        transform-origin: top left;
+    }
+    
+    /* Smaller Manananggal */
+    .manananggal {
+        width: 62.5px;
+        height: 63px;
+        transform: scale(0.5);
+        transform-origin: center;
+    }
+    
+    /* Smaller Machetes */
+    .machete {
+        width: 34px;
+        height: 34px;
+        transform: scale(0.5);
+        transform-origin: center;
+    }
+    
+    /* Smaller Power-ups */
+    .power-buff, .machete-buff {
+        width: 18px;
+        height: 18px;
+        font-size: 10px;
+        transform: scale(0.7);
+    }
+    
+    .wave-buff {
+        width: 28px;
+        height: 28px;
+        transform: scale(0.7);
+    }
+    
+    /* Smaller Sword Waves */
+    .sword-wave {
+        width: 42px;
+        height: 42px;
+        transform: scale(0.7);
     }
     
     .title {
-        font-size: 18px;
+        font-size: 16px;
         top: 10px;
         right: 10px;
     }
     
     .debug-info {
-        font-size: 8px;
+        font-size: 7px;
         bottom: 210px;
         right: 10px;
-        max-width: 150px;
+        max-width: 120px;
+        padding: 5px;
     }
 }
 
@@ -1319,5 +1368,43 @@ body {
         width: 60px;
         height: 60px;
         font-size: 24px;
+    }
+    
+    /* Even smaller entities in landscape */
+    .character {
+        transform: scale(0.45);
+    }
+    
+    .manananggal {
+        transform: scale(0.45);
+    }
+    
+    .machete {
+        transform: scale(0.45);
+    }
+    
+    .power-buff, .machete-buff, .wave-buff {
+        transform: scale(0.6);
+    }
+    
+    .sword-wave {
+        transform: scale(0.6);
+    }
+    
+    .hud-panel {
+        width: 100px;
+        min-width: 100px;
+        min-height: 100px;
+    }
+    
+    .hud-content {
+        padding: 8px;
+        font-size: 7px;
+    }
+    
+    .hud-stat {
+        font-size: 6px;
+        margin: 3px 0;
+        min-width: 70px;
     }
 }
