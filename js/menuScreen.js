@@ -15,14 +15,24 @@ const menuScreen = {
         if (menuElement) {
             menuElement.style.display = 'none';
         }
+        const gameArea = document.getElementById('gameArea');
+        if (gameArea) {
+            gameArea.style.display = 'block';
+        }
         this.isOpen = false;
         
-        // Start the game initialization
-        if (typeof initializeGame === 'function') {
-            initializeGame();
+        // If this is the first game, initialize fully
+        if (!window.gameLoopStarted) {
+            if (typeof initializeGame === 'function') {
+                initializeGame();
+            }
+        } else {
+            // Otherwise just resume from menu
+            if (typeof resumeGameFromMenu === 'function') {
+                resumeGameFromMenu();
+            }
         }
     },
-
     async viewLeaderboard() {
         const menuContent = document.querySelector('.menu-container');
         const originalContent = menuContent.innerHTML;
@@ -51,9 +61,9 @@ const menuScreen = {
                     <div class="menu-leaderboard-entry rank-${entry.rank}">
                         <span class="rank">${medal}</span>
                         <span class="player-name">${entry.playerName}</span>
-                        <span class="score">${entry.score}</span>
-                        <span class="kills">${entry.kills}</span>
-                        <span class="time">${entry.survivalTime}</span>
+                        <span class="score">&emsp;Score: ${entry.score}</span>
+                        <span class="kills">&emsp;Kills: ${entry.kills}</span>
+                        <span class="time"></span>
                     </div>
                 `;
             });
@@ -84,6 +94,7 @@ const menuScreen = {
                     <li>WASD / Arrow Keys - Move</li>
                     <li>Shift - Run</li>
                     <li>Left Mouse Click - Shoot Wave Attack</li>
+                    <li>ESC - Pause</li>
                     <li>Avoid the Manananggal!</li>
                 </ul>
             </div>
