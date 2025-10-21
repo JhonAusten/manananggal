@@ -1150,9 +1150,6 @@ body {
 /* JOYSTICK */
 .joystick-container {
     pointer-events: all;
-    position: absolute;
-    botttom: 40px;
-    left: 30px;
 }
 
 .joystick-base {
@@ -1411,4 +1408,5 @@ body {
         min-width: 70px;
     }
 }
+
 
